@@ -12,6 +12,7 @@ def readCsvToWakati(num):
   with open(r"Car_Solve_AI\raw_data\data" + str(num) + ".csv") as f:
     reader = csv.reader(f)
     for row in reader:
+      lineCsvArray = []
       if (row != []):
         pattern = r"標識|標示"
         repatter = re.compile(pattern)
@@ -19,9 +20,16 @@ def readCsvToWakati(num):
         print(f"{row[0]} : {row[1]}")
         if (result == None):
           wks = wk(row[1])
-          # print(wks)
-          arrayCsv.append(["Q" + str(count), wks, row[2]])
+          print(wks)
+          lineCsvArray.append(f'{count}')
+          for word in wks:
+            lineCsvArray.append(word)
+          if row[2] == "○":
+            lineCsvArray.append(1)
+          else:
+            lineCsvArray.append(0)
           count += 1
+          arrayCsv.append(lineCsvArray)
         else:
           print("Skipped")
 
