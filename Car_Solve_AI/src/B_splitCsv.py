@@ -1,29 +1,34 @@
 import csv
 import pprint
-from C_wakati import wakatiSentense as wk
+from B2_wakati import wakatiSentence as wk
 import re
 
 arrayCsv = []
 count = 1
+page = 0
 
 def readCsvToWakati(num):
   global count
+  global page
 
   with open(r"Car_Solve_AI\raw_data\data" + str(num) + ".csv") as f:
     reader = csv.reader(f)
     for row in reader:
       lineCsvArray = []
       if (row != []):
+        if (row[0] == "Q1"):
+          page += 1
+
         pattern = r"標識|標示"
         repatter = re.compile(pattern)
         result = repatter.search(row[1])
-        print(f"{row[0]} : {row[1]}")
+        print(f"{row[0]} ({page}) : {row[1]}")
+
         if (result == None):
           wks = wk(row[1])
           print(wks)
           lineCsvArray.append(f'{count}')
-          for word in wks:
-            lineCsvArray.append(word)
+          lineCsvArray.append(wks)
           if row[2] == "○":
             lineCsvArray.append(1)
           else:
@@ -32,6 +37,7 @@ def readCsvToWakati(num):
           arrayCsv.append(lineCsvArray)
         else:
           print("Skipped")
+        print()
 
   # with open(r"Car_Solve_AI\wakati_data\wakati_data" + str(num) + ".csv", "w") as f:
   #   writer = csv.writer(f)
