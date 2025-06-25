@@ -3,15 +3,15 @@ import pprint
 from B2_wakati import wakatiSentence as wk
 import re
 
-arrayCsv = []
+arrayCsv = [["id","text","label"]]
 count = 1
 page = 0
 
-def readCsvToWakati(num):
+def readCsvToWakati():
   global count
   global page
 
-  with open(r"Car_Solve_AI\raw_data\data" + str(num) + ".csv") as f:
+  with open(r"Car_Solve_AI\raw_data\data.csv",encoding="utf-8") as f:
     reader = csv.reader(f)
     for row in reader:
       lineCsvArray = []
@@ -49,8 +49,7 @@ def writeWakatiTo1Csv():
     writer.writerows(arrayCsv)
 
 def main():
-  for i in range(1,11):
-    readCsvToWakati(i)
+  readCsvToWakati()
   writeWakatiTo1Csv()
   
 
